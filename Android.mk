@@ -55,7 +55,7 @@ MINER_SRC_FILES += \
     sha2.c \
     scrypt.c \
     util.c \
-    cpu-miner.c \
+    cpu-miner.c
 
 ifeq ($(TARGET_ARCH),arm)
     MINER_SRC_FILES += \
@@ -81,12 +81,13 @@ LOCAL_C_INCLUDES += \
     $(MINER_INCLUDES) \
     $(LOCAL_PATH)/../curl/include \
     $(addprefix compat/jansson/,$(JANSSON_HEADERS))
-LOCAL_CFLAGS += $(common_CFLAGS)
+LOCAL_CFLAGS += $(common_CFLAGS) \
+    -O3
 
 ifeq ($(TARGET_ARCH),arm)
     LOCAL_CFLAGS += -D__arm__ -D__APCS_32__
     ifeq ($(ARCH_ARM_HAVE_NEON),true)
-	    LOCAL_CFLAGS += -D__ARM_NEON__
+	    LOCAL_CFLAGS += -D__ARM_NEON__ -mfpu=neon
     endif
 endif
 
